@@ -33,3 +33,6 @@ export const Link = styled(NavLink)`
     background-color: orangered;
   }
 `;
+
+export const Div = styled.div`
+margin: 10px auto`;

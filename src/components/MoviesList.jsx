@@ -1,14 +1,35 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Container } from './App.styled';
+import PropTypes from 'prop-types';
 
-export const MoviesList = ({ movies }) => {
+const MoviesList = ({ movies }) => {
+  const location = useLocation();
   return (
     <Container>
-      {movies.map(movie => (
-        <Link to={`${movie.id}`} key={movie.id}>
-          {movie.name}
-        </Link>
-      ))}
+      <ul>
+        {movies.map(movie => (
+          <li key={movie.id}>
+            <Link to={`/movies/${movie.id}`} state={{ from: location }}>
+              {movie.title || movie.name}
+            </Link>
+          </li>
+        ))}
+      </ul>
     </Container>
   );
+};
+
+export default MoviesList;
+
+MoviesList.propTypes = {
+  movies: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string,
+      name: PropTypes.string,
+      overview: PropTypes.string.isRequired,
+      poster_path: PropTypes.string,
+      vote_average: PropTypes.number.isRequired,
+    })
+  ).isRequired,
 };
